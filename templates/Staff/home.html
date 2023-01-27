@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="content container-fluid">
+       <div class="page-header">
+          <div class="row">
+             <div class="col-sm-12">
+                <h3 class="page-title">Teachers Details</h3>
+                <ul class="breadcrumb">
+                   <li class="breadcrumb-item"><a href="teachers.html">Teachers</a></li>
+                   <li class="breadcrumb-item active">Teachers Details</li>
+                </ul>
+             </div>
+          </div>
+       </div>
+       <div class="card">
+          <div class="card-body">
+             <div class="row">
+                <div class="col-md-12">
+                   <div class="about-info">
+                      <h4>About Me</h4>
+                      {% for i in staff %}
+                      
+                      <div class="media mt-3">
+                         <img src="/{{i.admin.profile_pic}}" class="mr-3" alt="...">
+                         {% comment %} {% for i in staff %} {% endcomment %}
+                         <div class="media-body">
+                            <ul>
+                               <li>
+                                  <span class="title-span" >Full Name : </span>
+                                  <span class="info-span" >{{ i.admin.first_name }} {{ i.admin.last_name }}</span>
+                               </li>
+                               
+                               <li>
+                                  <span class="title-span">Subject </span>
+                                  <span class="info-span">{% for i in subject %}{{i}} {% endfor %}</span>
+                               </li>
+                               
+                               
+                               
+                               <li>
+                                  <span class="title-span">Email : </span>
+                                  <span class="info-span">{{i.admin.email}}</span>
+                               </li>
+                               <li>
+                                  <span class="title-span">Gender : </span>
+                                  <span class="info-span">{{i.gender}}</span>
+                               </li>
+                               <li>
+                                  <span class="title-span">Joining Date :  </span>
+                                  <span class="info-span">{{i.created_at}}</span>
+                               </li>
+                              </ul>
+                           </div>
+                           {% comment %} {% endfor %} {% endcomment %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+{% endblock %}
