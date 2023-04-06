@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="content container-fluid">
+       <div class="page-header">
+          <div class="row">
+             <div class="col-sm-12">
+                <h3 class="page-title">Teachers Details</h3>
+                <ul class="breadcrumb">
+                   <li class="breadcrumb-item"><a href="teachers.html">Teachers</a></li>
+                   <li class="breadcrumb-item active">Teachers Details</li>
+                </ul>
+             </div>
+          </div>
+       </div>
+       <div class="card">
+          <div class="card-body">
+             <div class="row">
+                <div class="col-md-12">
+                   <div class="about-info">
+                      <h4>About Me</h4>
+                      <div class="media mt-3">
+                         <img src="/{{i.admin.profile_pic}}" class="mr-3" alt="...">
+                         {% comment %} {% for i in staff %} {% endcomment %}
+                         <div class="media-body">
+                            <ul>
+                               <li>
+                                  <span class="title-span">Full Name : </span>
+                                  <span class="info-span">{{i.admin.first_name}} {{i.admin.last_name}}</span>
+                               </li>
+                               <li>
+                                  <span class="title-span">Department : </span>
+                                  <span class="info-span">Computer Science</span>
+                               </li>
+                               <li>
+                                  <span class="title-span">Mobile : </span>
+                                  <span class="info-span">+91 89657 48512</span>
+                               </li>
+                               <li>
+                                  <span class="title-span">Email : </span>
+                                  <span class="info-span"><a href="https://preschool.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a3c7c2cad0dae3c4cec2cacf8dc0ccce">[email&#160;protected]</a></span>
+                               </li>
+                               <li>
+                                  <span class="title-span">Gender : </span>
+                                  <span class="info-span">Male</span>
+                               </li>
+                               <li>
+                                  <span class="title-span">DOB : </span>
+                                  <span class="info-span">22 Apr 1995</span>
+                               </li>
+                            </ul>
+                         </div>
+                         {% comment %} {% endfor %} {% endcomment %}
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+{% endblock %}

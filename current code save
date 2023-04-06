@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="" method="post" novalidate>
+    {% csrf_token %}
+    {{form.as_p}}
+    
+    <button type="submit">Submit</button>
+</form>
+{% comment %} <button type="submit"></button> {% endcomment %}
+<div class="col-auto text-right float-right ml-auto">
+    <a href="{% url 'present_report' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
+    <a href="add-student.htacml" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+ </div>
+
+{% endblock %}
