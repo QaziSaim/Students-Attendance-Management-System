@@ -184,6 +184,7 @@ def PRESENT_REPORT(request):
     attendance_query = Attendance.objects.values('student_id', 'subject_id') \
         .annotate(total_present=Sum('mark'), total_absent=Count('mark') - Sum('mark'), total_days=Count('mark'))
 
+
     # Add column headers
     writer.writerow(['Student ID', 'Student Name', 'Subject', 'Total Present Days', 'Total Absent Days', 'Percentage'])
 
