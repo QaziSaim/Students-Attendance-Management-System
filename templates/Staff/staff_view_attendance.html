@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>View Attendance</h2>
+  <form method="post" action="">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="subject">Subject:</label>
+      <select id="subject" name="subject_id" class="form-control">
+        <option value="">Select subject</option>
+        {% for subject in subjects %}
+          <option value="{{ subject.id }}">{{ subject.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="attendance_date" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">View Attendance</button>
+  </form>
+  <br>
+  {% if subject and attendance_records %}
+  <br>
+    <h3>Attendance Records for {{ subject.name }} on {{ attendance_date }}</h3>
+    <table class="table" id="table_id">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Attendance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student, attendance in student_attendance.items %}
+          <tr>
+            <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+            <td>
+              {% for mark in attendance %}
+                {% if mark == 1 %}
+                  <span class="badge badge-success">Present</span>
+                {% elif mark == 0 %}
+                  <span class="badge badge-danger">Absent</span>
+                {% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}

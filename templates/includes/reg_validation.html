@@ -1,0 +1,73 @@
+<script>
+    function registration_validation(e){
+         var fname = document.getElementById("fname").value;
+         var lname = document.getElementById("lname").value;
+         var user_email = document.getElementById("user_email").value;
+         var user_pass = document.getElementById("user_pass").value;
+         var mobile_no = document.getElementById("mobile_no").value;
+         var age = document.getElementById("age").value;
+         var address = document.getElementById("address").value;
+         if(fname==""){
+           alert("enter your first name");
+           e.preventDefault(e);
+           someBug();
+           return false
+         }
+         if(lname==""){
+           alert("enter your last name");
+           e.preventDefault(e);
+           someBug();
+           return false
+         }
+     
+         if(user_email==""){
+           alert("enter your email");
+           e.preventDefault(e);
+           someBug();
+           return false
+         }
+ 
+         if(user_pass==""){
+           alert("enter your password");
+           e.preventDefault(e);
+           someBug();
+           return false
+         }
+ 
+         if(mobile_no==""){
+           alert("enter your mobile number");
+           e.preventDefault(e);
+           someBug();
+           return false
+         }
+ 
+         if(age==""){
+           alert("enter your age");
+           e.preventDefault(e);
+           someBug();
+           return false
+         }
+ 
+         if(isNaN(age)){
+           alert("invalid age");
+           e.preventDefault(e);
+           someBug();
+           return false
+         }
+ 
+         if(address==""){
+           alert("enter your address");
+           e.preventDefault(e);
+           someBug();
+           return false
+         }
+         if(mobile_no.length != 10 || isNaN(mobile_no)){
+           alert(mobile_no.length);
+           alert("invalid mobile number");
+           e.preventDefault(e);
+           someBug();
+           return false
+         }
+   
+       }
+      

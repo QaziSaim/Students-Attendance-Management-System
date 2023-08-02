@@ -32,6 +32,12 @@ urlpatterns = [
     path('Hod/Staff/Edit/<str:id>',Hod_views.EDIT_STAFF,name='edit_staff'),
     path('Hod/Staff/Update',Hod_views.UPDATE_STAFF,name='update_staff'),
     path('Hod/Staff/Delete/<str:admin>',Hod_views.DELETE_STAFF,name='delete_staff'),
+    path('student_leave_view/', Hod_views.student_leave_view, name="student_leave_view"),
+    path('student_leave_approve/<leave_id>/', Hod_views.student_leave_approve, name="student_leave_approve"),
+    path('student_leave_reject/<leave_id>/', Hod_views.student_leave_reject, name="student_leave_reject"),
+    path('staff_leave_view/', Hod_views.staff_leave_view, name="staff_leave_view"),
+    path('staff_leave_approve/<leave_id>/', Hod_views.staff_leave_approve, name="staff_leave_approve"),
+    path('staff_leave_reject/<leave_id>/', Hod_views.staff_leave_reject, name="staff_leave_reject"),
 
     # Course
     path('Hod/Course/Add',Hod_views.ADD_COURSE,name='add_course'),
@@ -65,9 +71,16 @@ urlpatterns = [
     path('Staff/viewStudAtten', staff_views.STAFF_VIEW_ATTENDANCE, name='staff_view_attendance'),
     path('Staff/Attendance',staff_views.take_attendance,name='attendance'),
     path('Staff/Attendance/Present',staff_views.PRESENT_REPORT,name='present_report'),
+    path('staff_apply_leave/', staff_views.staff_apply_leave, name="staff_apply_leave"),
+    path('staff_apply_leave_save/', staff_views.staff_apply_leave_save, name="staff_apply_leave_save"),
     
     #This is Student urls
     path('Hod/Student',Student_Views.HOME,name='student_home'),
+    path('send-sms/<str:date>/', staff_views.send_sms, name='send_sms'),
+    path('student_apply_leave/', Student_Views.student_apply_leave, name="student_apply_leave"),
+    path('student_apply_leave_save/', Student_Views.student_apply_leave_save, name="student_apply_leave_save"),
+    
+    
 
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

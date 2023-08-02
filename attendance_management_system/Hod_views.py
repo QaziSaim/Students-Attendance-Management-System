@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from AMS.models import Course,Session_Year, CustomeUser,Student,Staff,Subject,Staff_Notification
+from AMS.models import Course,Session_Year, CustomeUser,Student,Staff,Subject,Staff_Notification,LeaveReportStaff,LeaveReportStudent
 from django.contrib import messages
 from django.http import HttpResponse
 @login_required(login_url='/')
@@ -27,23 +27,19 @@ def home(request):
 def ADD_STUDENT(request):
     course=Course.objects.all()
     session_year=Session_Year.objects.all()
-    st=Student.objects.order_by(id)
+    # st=Student.objects.order_by(id)
     if request.method=="POST":
         profile_pic=request.FILES.get('profile_pic')
+        username=request.POST.get('username')
         first_name=request.POST.get('first_name')
         last_name=request.POST.get('last_name')
         gender=request.POST.get('gender')
-        DOB=request.POST.get('DOB')
         email=request.POST.get('email')
-        username=request.POST.get('username')
         password=request.POST.get('password')
+        phonenumber=request.POST.get('phone_number')
         address=request.POST.get('address')
         course_id=request.POST.get('course_id')
         session_year_id=request.POST.get('session_year_id')
-        
-        
-        
-        # print(profile_pic,first_name,last_name,gender,DOB,email,username,password,address,course_id,session_year_id)
         if CustomeUser.objects.filter(email=email).exists():
             messages.warning(request,'Email is already exist')
             return redirect('add_student')
@@ -62,9 +58,9 @@ def ADD_STUDENT(request):
             user.set_password(password)
             user.save()
             course=Course.objects.get(id=course_id)
-            if course.limit <= course.student_set.count():
+            if int(course.limit) <= course.student_set.count():
                 messages.warning(request, "The course enrollment limit has been reached")
-                return redirect("add_student")
+                return redirect("add_student")  
             session_year=Session_Year.objects.get(id=session_year_id)
             student=Student(
                 admin=user,
@@ -72,10 +68,8 @@ def ADD_STUDENT(request):
                 session_year_id=session_year,
                 course_id=course,
                 gender=gender,
-                # dob=dob,
-
-
-            )
+                phone_number=phonenumber,
+                )
             student.save()
             messages.success(request, user.first_name+" "+user.last_name+" "+"Are Successfully Added")
             return redirect('add_student')
@@ -83,7 +77,7 @@ def ADD_STUDENT(request):
     context={
         'course':course,
         'session_year':session_year,
-        'st':st
+        # 'st':st
     }
     return render(request, 'Hod/add_student.html',context)
 
@@ -102,10 +96,10 @@ def UPDATE_STUDENT(request):
         first_name=request.POST.get('first_name')
         last_name=request.POST.get('last_name')
         gender=request.POST.get('gender')
-        DOB=request.POST.get('DOB')
         email=request.POST.get('email')
         username=request.POST.get('username')
         password=request.POST.get('password')
+        phonenumber=request.POST.get('phone_number')
         address=request.POST.get('address')
         course_id=request.POST.get('course_id')
         session_year_id=request.POST.get('session_year_id')
@@ -123,6 +117,7 @@ def UPDATE_STUDENT(request):
         student=Student.objects.get(admin=student_id)
         student.address=address
         student.gender=gender
+        student.pn=phonenumber
         
         course=Course.objects.get(id=course_id)
         student.course_id=course
@@ -448,4 +443,46 @@ def GENERATE(request):
     # "This is line 3\n"]
     response.writelines(lines)
     return response
-        
+
+
+def student_leave_view(request):
+    leaves = LeaveReportStudent.objects.all()
+    context = {
+        "leaves": leaves
+    }
+    return render(request, 'Hod/student_leave_view.html', context)
+
+def student_leave_approve(request, leave_id):
+    leave = LeaveReportStudent.objects.get(id=leave_id)
+    leave.leave_status = 1
+    leave.save()
+    return redirect('student_leave_view')
+
+
+def student_leave_reject(request, leave_id):
+    leave = LeaveReportStudent.objects.get(id=leave_id)
+    leave.leave_status = 2
+    leave.save()
+    return redirect('student_leave_view')
+
+
+def staff_leave_view(request):
+    leaves = LeaveReportStaff.objects.all()
+    context = {
+        "leaves": leaves
+    }
+    return render(request, 'Hod/staff_leave_view.html', context)
+
+
+def staff_leave_approve(request, leave_id):
+    leave = LeaveReportStaff.objects.get(id=leave_id)
+    leave.leave_status = 1
+    leave.save()
+    return redirect('staff_leave_view')
+
+
+def staff_leave_reject(request, leave_id):
+    leave = LeaveReportStaff.objects.get(id=leave_id)
+    leave.leave_status = 2
+    leave.save()
+    return redirect('staff_leave_view')

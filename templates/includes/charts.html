@@ -101,4 +101,104 @@ $(document).ready(function() {
 	}
   
 });
+$(document).ready(function () {
+	$("#calendar-doctor").simpleCalendar({
+		fixedStartDay: 0, // begin weeks by sunday
+		disableEmptyDetails: true,
+		events: [
+			// generate new event after tomorrow for one hour
+			{
+				startDate: new Date(new Date().setHours(new Date().getHours() + 24)).toDateString(),
+				endDate: new Date(new Date().setHours(new Date().getHours() + 25)).toISOString(),
+				summary: 'Conference with teachers'
+			},
+			// generate new event for yesterday at noon
+			{
+				startDate: new Date(new Date().setHours(new Date().getHours() - new Date().getHours() - 12, 0)).toISOString(),
+				endDate: new Date(new Date().setHours(new Date().getHours() - new Date().getHours() - 11)).getTime(),
+				summary: 'Old classes'
+			},
+			// generate new event for the last two days
+			{
+				startDate: new Date(new Date().setHours(new Date().getHours() - 48)).toISOString(),
+				endDate: new Date(new Date().setHours(new Date().getHours() - 24)).getTime(),
+				summary: 'Old Lessons'
+			}
+		],
+
+	});
+});
+{% comment %}  {% endcomment %}
+(function($) {
+    "use strict";
+// Circle Progress Bar
+function animateElements() {
+	$('.circle-bar1').each(function () {
+		var elementPos = $(this).offset().top;
+		var topOfWindow = $(window).scrollTop();
+		var percent = $(this).find('.circle-graph1').attr('data-percent');
+		var animate = $(this).data('animate');
+		if (elementPos < topOfWindow + $(window).height() - 30 && !animate) {
+			$(this).data('animate', true);
+			$(this).find('.circle-graph1').circleProgress({
+				value: percent / 100,
+				size : 400,
+				thickness: 30,
+				fill: {
+					color: '#6e6bfa'
+				}
+			});
+		}
+	});
+	$('.circle-bar2').each(function () {
+		var elementPos = $(this).offset().top;
+		var topOfWindow = $(window).scrollTop();
+		var percent = $(this).find('.circle-graph2').attr('data-percent');
+		var animate = $(this).data('animate');
+		if (elementPos < topOfWindow + $(window).height() - 30 && !animate) {
+			$(this).data('animate', true);
+			$(this).find('.circle-graph2').circleProgress({
+				value: percent / 100,
+				size : 400,
+				thickness: 30,
+				fill: {
+					color: '#6e6bfa'
+				}
+			});
+		}
+	});
+	$('.circle-bar3').each(function () {
+		var elementPos = $(this).offset().top;
+		var topOfWindow = $(window).scrollTop();
+		var percent = $(this).find('.circle-graph3').attr('data-percent');
+		var animate = $(this).data('animate');
+		if (elementPos < topOfWindow + $(window).height() - 30 && !animate) {
+			$(this).data('animate', true);
+			$(this).find('.circle-graph3').circleProgress({
+				value: percent / 100,
+				size : 400,
+				thickness: 30,
+				fill: {
+					color: '#6e6bfa'
+				}
+			});
+		}
+	});
+}	
+
+if($('.circle-bar').length > 0) {
+	animateElements();
+}
+$(window).scroll(animateElements);
+
+// Preloader
+
+$(window).on('load', function () {
+	if($('#loader').length > 0) {
+		$('#loader').delay(350).fadeOut('slow');
+		$('body').delay(350).css({ 'overflow': 'visible' });
+	}
+})
+
+})(jQuery);
 </script>

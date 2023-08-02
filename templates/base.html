@@ -23,13 +23,13 @@
    </head>
    <body>
 <div class="main-wrapper">
-         {%include 'includes/header.html'%}
-         {%include 'includes/sidebar.html'%}
+         {% include 'includes/header.html' %}
+         {% include 'includes/sidebar.html' %}
    <div class="page-wrapper">
             <div class="content container-fluid">
                {% block content %}
                {% endblock %}
-         {%include 'includes/footer.html'%}
+         {% include 'includes/footer.html'%}
          </div>
    </div>
 </div>
@@ -49,9 +49,12 @@
       $(document).ready(function() {
          $('#table_id').dataTable();
       });
+       
       </script>
-
-
+      {% include 'includes/alert.html' %}
+      
+      {% include 'includes/staffval.html' %}
+      
    </body>
 
 </html>

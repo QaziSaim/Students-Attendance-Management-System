@@ -6,6 +6,9 @@
                      <div class="card">
                         <div class="card-body">
                            <form method="post" action="{% url 'update_staff' %}" enctype="multipart/form-data">
+                              <div class="row">
+                                 
+                             
                                 {% csrf_token %}
                                  <div class="col-12">
                                     <h5 class="form-title"><span>Edit Staff</span></h5>
@@ -75,12 +78,12 @@
                                         </div>
                               </div>
                                   
-                                  <div class="col-6">
+                                  <div class="col-12">
                                     <button type="submit" class="btn btn-primary">Update Staff</button>
                                  </div>
                                   <br>
 
-
+                                 </div>
 
                            </form>
                         </div>

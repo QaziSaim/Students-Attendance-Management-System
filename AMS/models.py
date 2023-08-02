@@ -3,7 +3,8 @@ from django.contrib.auth.models import AbstractUser
 
 
 # Create your models here.
-
+# The entire database 
+# class tablename
 class CustomeUser(AbstractUser):
     USER=(
         (1,'HOD'),
@@ -15,14 +16,10 @@ class CustomeUser(AbstractUser):
     user_type=models.CharField(choices=USER,max_length=50,default=1)
     profile_pic=models.ImageField(upload_to='media/profile_pic')
 class Course(models.Model):
-    name=models.CharField(max_length=100)
-    limit=models.PositiveIntegerField(default=5)
+    name=models.CharField(max_length=100,null=False)
     create_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
-
-    def can_register(self):
-        return self.limit>self.__class__.objects.count()
-
+    limit=models.PositiveIntegerField(default=5)
     def __str__(self):
         return self.name
 class Session_Year(models.Model):
@@ -35,11 +32,11 @@ class Student(models.Model):
     admin=models.OneToOneField(CustomeUser,on_delete=models.CASCADE)
     address=models.TextField()
     gender=models.CharField(max_length=100)
-    # dob=models.CharField(max_length=100)
     course_id=models.ForeignKey(Course,on_delete=models.DO_NOTHING)
     session_year_id=models.ForeignKey(Session_Year,on_delete=models.DO_NOTHING)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
+    phone_number=models.PositiveIntegerField() 
 
     def __str__(self):
         return self.admin.first_name+ " "+ self.admin.last_name
@@ -69,31 +66,69 @@ class Staff_Notification(models.Model):
 
     def __str__(self):
         return self.staff_id.admin.first_name
+class Staff_leave(models.Model):
+    staff_id=models.ForeignKey(Staff, on_delete=models.CASCADE)
+    data=models.CharField(max_length=100)
+    message=models.TextField()
+    status=models.IntegerField(default=0)
+    created_at=models.DateTimeField(auto_now_add=True)
+    Updated_at=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.staff_id.admin.first_name
+    
+class Class(models.Model):
+    staff=models.ForeignKey(Staff, on_delete=models.CASCADE)
+    session_year=models.ForeignKey(Session_Year, on_delete=models.CASCADE,null=True,default="Free")
+    
+    name=models.CharField(max_length=250)
+    level = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.name
+
 
 # Attendance Model
-
 class Attendance(models.Model):
-    student_id=models.ForeignKey(Student, on_delete=models.DO_NOTHING)
     subject_id=models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
     attendance_date=models.DateField()
+    student_id=models.ManyToManyField(Student)
     mark=models.IntegerField(default=0)
-    # staff_username=models.CharField(max_length=100)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+    
 
+    def __str__(self):
+        return self.subject_id.name
 class Attendance_Report(models.Model):
-    ATTENDANCE_CHOICES = (
-        ('A', 'Absent'),
-        ('P', 'Present'),
-        ('L', 'Late'),
-    )
     student_id=models.ForeignKey(Student, on_delete=models.DO_NOTHING)
     attendance_id=models.ForeignKey(Attendance, on_delete=models.CASCADE)
-    attendance_status = models.CharField(max_length=1, choices=ATTENDANCE_CHOICES)
-
-
+    created_at=models.DateTimeField(auto_now_add=True)
+    stauts=models.IntegerField(null=True,default=0) 
 
     def __str__(self):
         return self.student_id.admin.first_name
+
+class LeaveReportStudent(models.Model):
+    id = models.AutoField(primary_key=True)
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+    leave_date = models.CharField(max_length=255)
+    leave_message = models.TextField()
+    leave_status = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = models.Manager()
+
+
+class LeaveReportStaff(models.Model):
+    id = models.AutoField(primary_key=True)
+    staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    leave_date = models.CharField(max_length=255)
+    leave_message = models.TextField()
+    leave_status = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = models.Manager()
+
 
     

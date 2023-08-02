@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+from twilio.rest import Client
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,7 +79,7 @@ WSGI_APPLICATION = "attendance_management_system.wsgi.application"
 #         'HOST': 'localhost',
 #         'PORT': '3306',
 #         'USER': 'root',
-#         'PASSWORD': 'saim@0123',
+#         'PASSWORD': 'saim',
 #     }
 # }
 
@@ -131,3 +132,12 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL='AMS.CustomeUser'
+
+TWILIO_ACCOUNT_SID = 'ACa1d79f7b530e58cbfdb3111f02a4eea6'
+TWILIO_AUTH_TOKEN = '8b00647f4969217a01d55d073b502e1d'
+TWILIO_FROM_NUMBER = '+15075194764'
+
+
+twilio_client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+# +15075194764 twilio number

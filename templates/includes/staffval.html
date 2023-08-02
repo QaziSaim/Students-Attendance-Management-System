@@ -1,0 +1,60 @@
+<script>
+  const passwordField = document.getElementById("password1");
+  const validationMsg = document.getElementById("password-validation-msg1");
+
+passwordField.addEventListener("input", validatePassword);
+
+function validatePassword() {
+const password = passwordField.value;
+const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+
+if (!regex.test(password)) {
+  validationMsg.textContent = "Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, and one number.";
+  passwordField.setCustomValidity("Invalid password");
+} else {
+  validationMsg.textContent = "";
+  passwordField.setCustomValidity("");
+}
+}
+
+</script>
+<script>
+
+const emailField = document.getElementById("email1");
+const validationMsg = document.getElementById("email-validation-msg1");
+
+emailField.addEventListener("input", validateEmail);
+
+function validateEmail() {
+  const email = emailField.value;
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!regex.test(email)) {
+    validationMsg.textContent = "Please enter a valid email address.";
+    emailField.setCustomValidity("Invalid email address");
+  } else {
+    validationMsg.textContent = "";
+    emailField.setCustomValidity("");
+  }
+}
+// Get references to the input and validation message elements
+
+
+
+</script>
+<script>
+  const ageInput = document.getElementById('age-input');
+const ageValidationMsg = document.getElementById('age-validation-msg');
+
+// Add an event listener to the input element to validate on change
+ageInput.addEventListener('change', function() {
+  const age = Number(ageInput.value);
+  if (age < 20 || age > 60) {
+    ageValidationMsg.textContent = 'Age must be between 20 and 60';
+    ageInput.setCustomValidity('Invalid age');
+  } else {
+    ageValidationMsg.textContent = '';
+    ageInput.setCustomValidity('');
+  }
+});
+</script>
